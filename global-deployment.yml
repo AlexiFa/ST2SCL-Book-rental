@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: book-catalog
+    version: v1
+  name: book-catalog-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-catalog
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: book-catalog
+    spec:
+      containers:
+        - name: book-catalog
+          image: alex6f/books-catalogue:1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: book-catalog
+  name: book-catalog-service
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+      app: book-catalog
+  type: NodePort
+status:
+  loadBalancer: {}
