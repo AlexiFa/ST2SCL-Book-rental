@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 public class booksCatalogueService {
-    List<Book> books = new ArrayList<Book>();
+    List<Book> books = new ArrayList<>();
     Logger logger = LoggerFactory.getLogger(booksCatalogueService.class);
 
     public booksCatalogueService() {
@@ -39,7 +39,7 @@ public class booksCatalogueService {
                 return book;
             }
         }
-        logger.error("No book found with ISBN: " + ISBN);
+        logger.error("No book found with ISBN: {}", ISBN);
         // TODO: throw custom exception
         return null;
     }

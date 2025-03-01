@@ -2,7 +2,13 @@
 
 Microservice Project with kubernetes
 
+## TODO (maybe)
+
+- [ ] GitHub actions
+
 ## Steps
+
+### Books Catalogue service
 
 Build the project
 
@@ -47,4 +53,41 @@ or you can forward the port
 
 ```bash
 kubectl port-forward service/books-catalogue-service -n project 8080:8080
+```
+
+### Database service
+
+Build the database image (If on windows, you need change CRLF to LF in the entrypoint.sh file)
+
+```bash
+cd postgres
+docker build -t books-db .
+```
+
+Or use the image I pushed to docker hub
+
+```bash
+docker pull alex6f/books-db:1
+```
+
+---
+
+#### Deploy the database to the kubernetes cluster
+
+##### Secret
+
+```bash
+kubectl apply -f postgres-secret.yml -n project
+```
+
+##### Storage
+
+```bash
+kubectl apply -f postgres-storage.yml -n project
+```
+
+##### Deployment
+
+```bash
+kubectl apply -f postgres-deployment.yml -n project
 ```
