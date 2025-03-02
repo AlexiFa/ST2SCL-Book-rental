@@ -40,10 +40,9 @@ const HomePage = () => {
         <h1>Books</h1>
         <ul>
         {books.map(book => (
-            <li key={book.isbn}>{book.title}</li>
+            <li key={book.isbn}>{book.title} : {book.price} €</li>
         ))}
         </ul>
-        <p>{BOOKS_SERVICE_URL}</p>
         </div>
     );
 }

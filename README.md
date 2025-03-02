@@ -15,6 +15,26 @@ minikube start --driver=docker
 kubectl create namespace project
 ```
 
+### Service mesh
+
+Install istio by downloading it then go into the folder export variables in the path and then run the following command (I will not go into details for installing istio)
+
+```bash
+istioctl install --set profile=demo -y
+```
+
+to enable the istio injection to the project namespace when the pods are started
+
+```bash
+kubectl label namespace project istio-injection=enabled
+```
+
+Apply the gateway
+
+```bash
+kubectl apply -f gateway.yml -n project
+```
+
 ### Database service
 
 [//]: # (Build the database image &#40;If on windows, you need change CRLF to LF in the entrypoint.sh file&#41;)
@@ -55,26 +75,6 @@ kubectl apply -f postgres-storage.yml -n project
 
 ```bash
 kubectl apply -f postgres-deployment.yml -n project
-```
-
-### Service mesh
-
-Install istio by downloading it then go into the folder export variables in the path and then run the following command (I will not go into details for installing istio)
-
-```bash
-istioctl install --set profile=demo -y
-```
-
-to enable the istio injection to the project namespace when the pods are started
-
-```bash
-kubectl label namespace project istio-injection=enabled
-```
-
-Apply the gateway
-
-```bash
-kubectl apply -f gateway.yml -n project
 ```
 
 ### Books Catalogue service
