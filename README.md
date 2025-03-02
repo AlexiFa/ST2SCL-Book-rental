@@ -2,10 +2,6 @@
 
 Microservice Project with kubernetes
 
-## TODO (maybe)
-
-- [ ] GitHub actions
-
 ## Steps
 
 Start the minikube cluster
@@ -37,26 +33,6 @@ kubectl apply -f gateway.yml -n project
 
 ### Database service
 
-[//]: # (Build the database image &#40;If on windows, you need change CRLF to LF in the entrypoint.sh file&#41;)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (cd postgres)
-
-[//]: # (docker build -t books-db .)
-
-[//]: # (```)
-
-[//]: # (Or use the image I pushed to docker hub)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (docker pull alex6f/books-db:1)
-
-[//]: # (```)
-
 Deploy the database to the kubernetes cluster
 
 #### Secret
@@ -78,37 +54,6 @@ kubectl apply -f postgres-deployment.yml -n project
 ```
 
 ### Books Catalogue service
-
-[//]: # (Build the project)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (cd booksCatalogue)
-
-[//]: # (./gradlew build)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Build the docker image)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (docker build -t books-catalogue .)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (You can use this image or the one I pushed to docker hub)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (docker pull alex6f/books-catalogue:1)
-
-[//]: # (```)
 
 Apply the deployment to your kubernetes cluster
 
@@ -132,37 +77,6 @@ kubectl port-forward service/books-catalogue-service -n project 8080:8080
 In the url you can see that the service is connected to the database as there is, in the /books endpoint, a list of the books from the database
 
 ### User service
-
-[//]: # (Build the project)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (cd userService)
-
-[//]: # (./gradlew build)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (Build the docker image)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (docker build -t books-user .)
-
-[//]: # (```)
-
-[//]: # ()
-[//]: # (You can use this image or the one I pushed to docker hub)
-
-[//]: # ()
-[//]: # (```bash)
-
-[//]: # (docker pull alex6f/books-user:1)
-
-[//]: # (```)
 
 Apply the deployment to your kubernetes cluster
 
@@ -197,3 +111,77 @@ kubectl port-forward -n istio-system deployment/istio-ingressgateway 8080:8080
 Then you can go to `localhost:8080/` to see the front end with the books and the hello message
 
 You can also go to `localhost:8080/booksService/books` to see the books from the database or `localhost:8080/userService/hello` to see the hello message from the user service
+
+## Build services individually
+
+### User service
+
+Build the project
+
+```bash
+cd userService
+./gradlew build
+```
+
+Build the docker image
+
+```bash
+docker build -t books-user .
+```
+
+You can use this image or the one I pushed to docker hub
+
+```bash
+docker pull alex6f/books-user:1
+```
+
+### Books Catalogue service
+
+Build the project
+
+```bash
+cd booksCatalogue
+./gradlew build
+```
+
+Build the docker image
+
+```bash
+docker build -t books-catalogue .
+```
+
+You can use this image or the one I pushed to docker hub
+
+```bash
+docker pull alex6f/books-catalogue:1
+```
+
+### Database
+
+Build the database image (If on windows, you need change CRLF to LF in the entrypoint.sh file)
+
+```bash
+cd postgres
+docker build -t books-db .
+```
+
+Or use the image I pushed to docker hub
+
+```bash
+docker pull alex6f/books-db:1
+```
+
+### Front end
+
+Build the project
+
+```bash
+cd front
+docker build -t books-front .
+```
+
+You can use this image or the one I pushed to docker hub
+
+```bash
+docker pull alex6f/books-front:1
+```
