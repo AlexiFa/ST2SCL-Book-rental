@@ -24,6 +24,13 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://postgres:5432/booksrental"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: "dbuser"
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: "dbpass"
           resources: {}
       restartPolicy: Always
 status: {}
