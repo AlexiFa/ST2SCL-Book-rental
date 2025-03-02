@@ -1,6 +1,11 @@
 package com.example.booksCatalogue.data;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
     String ISBN;
     String title;
     String author;
