@@ -35,12 +35,35 @@ metadata:
   name: user-service-service
 spec:
   ports:
-    - port: 81  # Exposes service inside the cluster
+    - port: 80  # Exposes service inside the cluster
       protocol: TCP
       targetPort: 8081
       name: http
   selector:
     app: user-service
-  type: NodePort  # Matches book-catalog-service
+  type: ClusterIP  # Matches book-catalog-service
 status:
   loadBalancer: {}
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: user-service-proxy
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - project/microservice-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /userService/
+      rewrite:
+        uri: /
+      route:
+        - destination:
+            port:
+              number: 80
+            host: user-service-service.project.svc.cluster.local

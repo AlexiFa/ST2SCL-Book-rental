@@ -57,6 +57,26 @@ kubectl apply -f postgres-storage.yml -n project
 kubectl apply -f postgres-deployment.yml -n project
 ```
 
+### Service mesh
+
+Install istio by downloading it then go into the folder export variables in the path and then run the following command (I will not go into details for installing istio)
+
+```bash
+istioctl install --set profile=demo -y
+```
+
+to enable the istio injection to the project namespace when the pods are started
+
+```bash
+kubectl label namespace project istio-injection=enabled
+```
+
+Apply the gateway
+
+```bash
+kubectl apply -f gateway.yml -n project
+```
+
 ### Books Catalogue service
 
 [//]: # (Build the project)
@@ -157,3 +177,13 @@ minikube service books-user-service -n project --url
 ```
 
 In the given url at the /hello route you can see that the user service is connected the user service and is getting the hello message from it
+
+### Test the service mesh
+
+Port forward the gateway
+
+```bash
+kubectl port-forward -n istio-system deployment/istio-ingressgateway 8080:8080
+```
+
+Then you can go to `localhost:8080/booksService/books` to see the books from the database or `localhost:8080/userService/hello` to see the hello message from the user service
