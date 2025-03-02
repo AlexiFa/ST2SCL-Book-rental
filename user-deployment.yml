@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: user-service
+    version: v1
+  name: user-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: alex6f/books-user:1  # Replace with your actual image
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8081
+          env:
+            - name: BOOKS_SERVICE_URL
+              value: "http://book-catalog-service:80"  # 🔄 Matches book service name
+          resources: {}
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: user-service
+  name: user-service-service
+spec:
+  ports:
+    - port: 81  # Exposes service inside the cluster
+      protocol: TCP
+      targetPort: 8081
+      name: http
+  selector:
+    app: user-service
+  type: NodePort  # Matches book-catalog-service
+status:
+  loadBalancer: {}

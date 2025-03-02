@@ -55,3 +55,26 @@ spec:
   type: NodePort
 status:
   loadBalancer: {}
+
+#---
+#
+#apiVersion: networking.istio.io/v1alpha3
+#kind: VirtualService
+#metadata:
+#  name: book-catalog-proxy
+#spec:
+#  hosts:
+#    - "*"
+#  gateways:
+#    - microservices-gateway
+#  http:
+#    - match:
+#      - uri:
+#          prefix: /books/
+#      rewrite:
+#        uri: /
+#      route:
+#        - destination:
+#            port:
+#              number: 80
+#            host: book-catalog-service.project.svc.cluster.local

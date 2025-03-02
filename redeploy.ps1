@@ -2,8 +2,8 @@
 $deploy = $true
 $delete = $true
 $namespace = "project"  # Change this if your deployments are in a different namespace
-$deployments = @("postgres-secret.yml", "postgres-storage.yml", "postgres-deployment.yml", "global-deployment.yml")  # Replace with your actual deployment names
-$yamlFiles = @("postgres-deployment.yml", "postgres-storage.yml", "postgres-secret.yml", "global-deployment.yml")  # Replace with your actual YAML file paths
+$deployments = @("postgres-secret.yml", "postgres-storage.yml", "postgres-deployment.yml", "book-deployment.yml")  # Replace with your actual deployment names
+$yamlFiles = @("postgres-deployment.yml", "postgres-storage.yml", "postgres-secret.yml", "book-deployment.yml")  # Replace with your actual YAML file paths
 
 # # Ensure kubectl is installed
 # if (-not (Get-Command kubectl -ErrorAction SilentlyContinue)) {

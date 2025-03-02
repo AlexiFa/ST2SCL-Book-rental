@@ -40,7 +40,7 @@ Go back to the root folder and apply the deployment to your kubernetes cluster
 
 ```bash
 cd ..
-kubectl apply -f global-deployment.yml -n project
+kubectl apply -f book-deployment.yml -n project
 ```
 
 You can get the url of the service with
