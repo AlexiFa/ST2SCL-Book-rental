@@ -178,6 +178,14 @@ minikube service books-user-service -n project --url
 
 In the given url at the /hello route you can see that the user service is connected the user service and is getting the hello message from it
 
+### Front end
+
+Apply the deployment to your kubernetes cluster
+
+```bash
+kubectl apply -f front-deployment.yml -n project
+```
+
 ### Test the service mesh
 
 Port forward the gateway
@@ -186,4 +194,6 @@ Port forward the gateway
 kubectl port-forward -n istio-system deployment/istio-ingressgateway 8080:8080
 ```
 
-Then you can go to `localhost:8080/booksService/books` to see the books from the database or `localhost:8080/userService/hello` to see the hello message from the user service
+Then you can go to `localhost:8080/` to see the front end with the books and the hello message
+
+You can also go to `localhost:8080/booksService/books` to see the books from the database or `localhost:8080/userService/hello` to see the hello message from the user service
